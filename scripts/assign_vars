@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 # Save the input text in a variable
 input=$(cat)

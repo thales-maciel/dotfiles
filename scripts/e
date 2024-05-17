@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/env bash
 
 # If no arguments are given, check permissions on CWD
 if [ -z "$1" ]; then
     if [ -w "." ]; then
-        exec $EDITOR -w ~/.config/nvim/keys.log
+        exec $EDITOR
     else
         exec sudoedit
     fi
@@ -31,7 +31,7 @@ if [ ! -e "$path" ]; then
 fi
 
 if [ -w "$path" ]; then
-    exec $EDITOR "$path" "$@" -w ~/.config/nvim/keys.log
+    exec $EDITOR "$path" "$@"
 else
     exec sudoedit "$path" "$@"
 fi

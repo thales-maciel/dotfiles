@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 main() {
   [[ -f ${deckfile:=$*} ]] || ERX no such file

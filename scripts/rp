@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 # Read the text from stdin into a variable
 text=$(cat)

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 ENTRY=~/.config/picom/picom.conf
 

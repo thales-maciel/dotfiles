@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 [ -z "$TMUX" ] && echo "Not in tmux" && exit 1
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 # This script assumes that xargs, fd, fzf and bat are installed.
 

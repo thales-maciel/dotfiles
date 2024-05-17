@@ -1,0 +1,62 @@
+#!/bin/env bash
+
+# Function to shut down VPN sessions
+down() {
+    # get sessions
+    sessions=$(openvpn3 sessions-list|grep "Path:" | awk '{print $2}')
+
+    # return if empty
+    [[ -z "$sessions" ]] && return
+
+    # run the down command for every session
+    while IFS= read -r sess; do
+        openvpn3 session-manage -o "$sess" -D
+    done <<< "$sessions"
+}
+
+# Function to set up VPN changing the default browser
+up() {
+    down
+    # set vivaldi as default browser
+    xdg-mime default vivaldi-stable.desktop x-scheme-handler/https x-scheme-handler/http
+    # connect to vpn
+    openvpn3 session-start -c ~/projects/ubots/vpn-ashburn.ovpn
+    # set firefox as default browser
+    xdg-mime default firefox.desktop x-scheme-handler/https x-scheme-handler/http
+}
+
+# Function to print usage/help information
+print_usage() {
+    echo "Usage: $0 [up|down|help]"
+    echo "  up   - Start VPN session and set up browsers"
+    echo "  down - Shut down all VPN sessions"
+    echo "  help - Show this usage information"
+}
+
+# Main function to parse command-line arguments and execute the corresponding function
+main() {
+    if [[ -z $1 ]]; then
+        print_usage
+        exit 1
+    fi
+
+    case "$1" in
+        up)
+            up
+            ;;
+        down)
+            down
+            ;;
+        -h|--help|help)
+            print_usage
+            ;;
+        *)
+            echo "Invalid argument: $1"
+            print_usage
+            exit 1
+            ;;
+    esac
+}
+
+# Call the main function with all arguments passed to the script
+main "$@"
