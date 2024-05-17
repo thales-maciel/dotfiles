@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 [ -z "$5" ] && echo "Usage: $0 <image> <x> <y> <max-h> <max-w>" && exit
 source "`ueberzug library`"

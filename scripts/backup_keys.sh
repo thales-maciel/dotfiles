@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 DATE=$(date +"%Y-%m-%d")
 PRIVATE_KEYS="gpg_private_keys_$DATE.asc"

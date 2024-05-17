@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # If no arguments are given, check permissions on CWD
 if [ -z "$1" ]; then

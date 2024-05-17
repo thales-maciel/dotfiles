@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/thalesmaciel/safe"
 RECIPIENT="9DDD176E0FC16FCD0444344533112E6833C34679"

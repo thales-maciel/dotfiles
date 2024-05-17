@@ -130,10 +130,3 @@ export LOCALE_ARCHIVE="$(nix-env --installed --no-name --out-path --query glibc-
 # Turso
 export PATH="/home/thales/.turso:$PATH"
 
-# pnpm
-export PNPM_HOME="/home/thales/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
