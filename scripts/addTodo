@@ -1,0 +1,31 @@
+#!/bin/bash
+
+secret=$(safe get "todoist")
+
+# prompt the user for input using dmenu
+content=$(echo | dmenu -p "Quick Capture")
+
+# remove leading whitespace characters
+content="${content#"${content%%[![:space:]]*}"}"
+
+# exit on empty content
+if [ -z "$content" ]; then echo "Nothing to capture."; exit 0; fi
+
+response=$(curl \
+  --write-out '%{http_code}' --silent --output /dev/null \
+  -X POST \
+  --data "{\"content\": \"$content\"}" \
+  -H "Content-Type: application/json" \
+  -H "X-Request-Id: $(uuidgen)" \
+  -H "Authorization: Bearer $secret" \
+  "https://api.todoist.com/rest/v2/tasks" \
+)
+echo $response
+
+if [[ "$response" -ge 200 && "$response" -lt 300 ]]; then
+  exit 0
+else
+  echo 'Something went wrong. Please check your credentials and try again.'
+  notify-send -u critical 'Something went wrong. Please check your credentials and try again.'
+  exit 1
+fi

@@ -1,0 +1,16 @@
+matches:
+  - trigger: "cora:ao"
+    replace: coração
+    propagate_case: true
+    word: true
+
+  - trigger: "serio"
+    replace: sério
+    propagate_case: true
+    word: true
+
+  - trigger: "nao"
+    replace: "não"
+    propagate_case: true
+    word: true
+

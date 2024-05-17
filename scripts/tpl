@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Read the text from stdin into a variable
+input=$(cat)
+
+# Gather all variables from the text into a \n separated string
+vars=$(perl -nle 'BEGIN{$/="";} while (/<%\s*(.*?)\s*%>/g) {$seen{$1}++ or print $1}' <<< $input)
+
+readarray -t variables <<< "$vars"
+
+declare -A pairs
+
+# if arguments are passed, create a new array of variables
+if [[ -n "$*" ]]; then
+    for arg in "$@"
+    do
+        if [[ $arg == *":"* ]]; then
+            IFS=':' read -r key value <<< "$arg"
+            pairs["$key"]="$value"
+        else
+            echo "Invalid argument: $arg"
+            exit 1
+        fi
+    done
+    # Make sure every variable was filled
+    for var in "${variables[@]}"; do
+        if [[ $var == "date" ]]; then
+            val=$(date +%F)
+            pairs["${var}"]=$val
+        else
+            [ -z "${pairs[$var]}" ] && echo "Missing argument for: $var" && exit 1
+        fi
+    done
+else
+    # For each variable, ask the user for the value
+    for var in "${variables[@]}"; do
+        if [[ $var == "date" ]]; then
+            val=$(date +%F)
+            pairs["${var}"]=$val
+        else
+            echo "Enter a value for: $var" >&2
+            read answer </dev/tty
+            pairs["$var"]=$answer
+        fi
+    done
+fi
+
+# Replace variables with their values
+for var in "${!pairs[@]}"; do
+    # Replace all variables with their values
+    input=$(echo "$input" | sed "s/<%\s*$var\s*%>/$(echo "${pairs[${var}]}" | sed 's/\//\\\//g')/g")
+done
+
+echo "$input"
+

@@ -1,0 +1,38 @@
+// This keyboard layout only maps keys without changing modifiers
+// because xkb can't fire a key event upon release, leading to a bad
+// terminal experience when mapping caps to enter and arrows.
+// Caps Lock has been mapped to right alt with Interception Tools:
+// https://gitlab.com/interception/linux/tools
+// https://gitlab.com/interception/linux/plugins/dual-function-keys
+
+// TODO: Make caps lock act as a switcher for br, like ralt without dead keys.
+
+
+default alphanumeric_keys modifier_keys
+xkb_symbols "base" {
+    // typo includes lots of symbols for 
+    // 3rd and 4th layer
+    // include "typo"
+
+    // enable 3rd layer
+    include "level3(ralt_switch)"
+
+    // se(us) == us layout with åäö on layer 3 & 4
+    include "br"
+
+    // all includes prior to this line found in
+    // /usr/share/X11/xkb/symbols/
+
+    // below are custom symbols declared in here
+    include "caps_esc_ctrl"
+    include "hjkl-like-vi"
+
+    // include "main(custom)"
+};
+
+partial alphanumeric_keys modifier_keys
+xkb_symbols "custom" {
+  // key <AC10> { [ NoSymbol, NoSymbol, ccedilla, Ccedilla ] }; // ";"
+  // key <AC11> { [ NoSymbol, NoSymbol, dead_tilde, dead_circumflex ] }; // "'"
+  // key <AD11> { [ NoSymbol, NoSymbol, dead_acute, dead_grave ] }; // "["
+};

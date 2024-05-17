@@ -1,0 +1,16 @@
+matches:
+  - trigger: tbm
+    replace: também
+    propagate_case: true
+    word: true
+
+  - trigger: vc
+    replace: você
+    propagate_case: true
+    word: true
+
+  - trigger: "..ak"
+    replace: "*args, **kwargs"
+
+  - trigger: "..lh"
+    replace: "localhost:"

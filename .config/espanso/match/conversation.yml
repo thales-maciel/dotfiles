@@ -1,0 +1,23 @@
+matches:
+  - trigger: "..sep"
+    replace: "Se precisar de mais alguma coisa é só me chamar"
+
+  - trigger: "..agu"
+    replace: Aguardo seu retorno!
+
+  - trigger: "..oi"
+    replace: |
+      {{output}}
+    vars:
+      - name: greet
+        type: shell
+        params:
+          cmd: "h=`date +%H`\nif [ $h -lt 12 ]; then\n  echo bom dia\nelif [ $h -lt 18 ]; then\n  echo boa tarde\nelse\n  echo boa noite\nfi\n"
+      - name: form1
+        type: form
+        params:
+          layout: "[[name]]"
+      - name: output
+        type: shell
+        params:
+          cmd: "if [ -n \"$ESPANSO_FORM1_NAME\"]; then\n  echo Oi, $ESPANSO_GREET!\nelse\n  echo Oi $ESPANSO_FORM1_NAME, $ESPANSO_GREET!\nfi\n"

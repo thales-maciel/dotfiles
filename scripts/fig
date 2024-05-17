@@ -1,0 +1,6 @@
+#!/bin/bash
+
+clear
+echo -e "\n"
+WIDTH=$(tput cols)
+figlet $@ -f /usr/share/figlet/3d.flf -w "$WIDTH" | lolcat

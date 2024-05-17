@@ -1,0 +1,6 @@
+if [[ -n "$1" ]]
+then
+    . $1/bin/activate
+else
+    . env/bin/activate
+fi

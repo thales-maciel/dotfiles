@@ -1,0 +1,174 @@
+### Shell defaults
+
+## Editing and sourcing shell configs
+alias ezsh="$EDITOR $ZDOTDIR/.zshrc"
+alias szsh="source $ZDOTDIR/.zshrc"
+
+## Exit bindings
+alias q=exit
+alias :q=exit
+alias Çq=exit
+alias çq=exit
+alias :wq=exit
+
+## Standard command modifiers
+alias ..="cd .."
+alias ls="lsd -A --group-dirs first"
+alias l="ls -l"
+alias rmrf="rm -rf"
+alias cp='cp -ri'
+alias mkdir='mkdir -pv'
+alias chx='chmod +x'
+
+## Utils
+alias ppath="echo $PATH | tr ':' '\n' | nl"
+
+# mkdir + cd into new dir
+function mkcd(){
+    mkdir -p $1
+    cd $1
+}
+
+# touch while creating dir if needed
+# maybe should alias touch to this function
+function mktouch() {
+    for p in $@; do
+        mkdir -p $(dirname "$p")
+    done
+    touch $@
+}
+
+# makes a backup of the specified file
+# by copying the file with a .bak suffix.
+# maybe should run it with -r to allow
+# backing up full directories
+function bak() {
+    if [[ -n "$2" ]]
+    then
+        cp $1 "$2$1.bak"
+    else
+        cp $1 "$1.bak"
+    fi
+}
+
+
+## Program specific bindings
+
+# Just
+alias j='just'
+
+# Git
+alias gs='git status -sb'
+alias gp='git push'
+alias gpn="git push --no-verify"
+alias gca='git commit -a'
+alias gundo='git reset HEAD^'
+alias ga='git add'
+alias wt='git worktree'
+
+# Docker
+alias dps="docker ps"
+alias dc="docker-compose"
+alias dcu="docker-compose up"
+alias dcud="docker-compose up -d"
+alias dcd="docker-compose down"
+
+# Toggle notifications
+alias ntg="dunstctl set-paused toggle"
+
+## Lazy bindings
+alias i="yay -S"
+alias u="yay -Rns"
+alias g=git
+alias n="nvim"
+alias v="nvim"
+alias lg='lazygit'
+alias ta='tmux a'
+alias tn='tmux new -s'
+alias mux='tmuxinator'
+alias ns="nix-shell --command \"zsh\""
+
+### Utilities
+## Directory navigation
+
+# Interactive fuzzyfinding and cd into projects directory
+fda() {
+    local dir
+    dir=$(find ~/projects -maxdepth 2 -type d > /dev/null | fzf) && cd "$dir"
+}
+
+# Interactive fuzzyfinding and cd into .config directory
+fdc() {
+    local dir
+    dir=$(find ~/.config/ -maxdepth 1 -type d > /dev/null | fzf) && cd "$dir"
+}
+
+# Interactive fuzzyfinding and cd into ~/tpm directory
+fdt() {
+    local dir
+    dir=$(find ~/tmp/ -maxdepth 1 -type d > /dev/null | fzf) && cd "$dir"
+}
+
+### Language specific utils
+## JS
+
+# Interactive fuzzyfinding and 
+# running scripts in $PWD/package.json
+npr() {
+    package_file="$(pwd)/package.json"
+    [[ ! -f $package_file ]] && echo "$package_file not found" && return 1
+
+    script=$(jq -r '.scripts | keys[]' "$package_file" | fzf --header="Choose a script:")
+    [ -z "$script" ] && return 0
+
+    echo "\nnpm run $script" >&2
+    print -s "npm run $script" # optional, puts npm run command into zsh history
+    npm run $script
+}
+
+
+## Python
+alias pir="pip install -rrequirements.txt"
+alias pird="pip install -rrequirements-dev.txt"
+
+# activates the python virtual environment
+# inside the specified directory. defaults to `./env`.
+function enva() {
+    if [[ -n "$1" ]]
+    then
+        . $1/bin/activate
+    else
+        . env/bin/activate
+    fi
+}
+
+# Aliases Django's manage.py script
+# and makes it available in all dirs.
+alias manage='python $VIRTUAL_ENV/../manage.py'
+
+
+## Haskell
+# Bootstraps a new Haskell module with the specified name
+function hsmod() {
+    if [[ ! -n "$1" ]] then
+        echo "You need a file name to create a Module."
+        return 1
+    fi
+    if [[ -f "./${(C)1}.hs" ]] then
+        echo "File already exists!"
+        return 1
+    fi
+    echo "module ${(C)1} where\n\n" > "${(C)1}.hs"
+    echo "./${(C)1}.hs"
+    return 0
+}
+
+
+### Misc
+# I don't really remember what this one does,
+# but judging by its name it prints csv from a file
+function pcsv() {
+    perl -pe 's/((?<=,)|(?<=^)),/ ,/g;' "$@" | column -t -s, | less  -F -S -X -K
+}
+
+# vim: set ft=zsh sw=4:

@@ -1,0 +1,27 @@
+#!/bin/env bash
+
+# Check if an argument is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <seconds>"
+  exit 1
+fi
+
+# Get the total time in seconds
+total_seconds=$1
+
+# Function to display the timer
+display_timer() {
+  local remaining_seconds=$1
+  while [ $remaining_seconds -ge 0 ]; do
+    minutes=$((remaining_seconds / 60))
+    seconds=$((remaining_seconds % 60))
+    printf "\r%02d:%02d" $minutes $seconds
+    sleep 1
+    remaining_seconds=$((remaining_seconds - 1))
+  done
+  echo ""
+}
+
+# Start the countdown
+display_timer $total_seconds
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ENTRY=~/.config/picom/picom.conf
+
+DEFAULT_DIM=0.2
+CURRENT_DIM=$(sed -n '/^inactive-dim = /p' ~/.config/picom/picom.conf | sed "s/[^0-9.]//g")
+
+if [ "$DEFAULT_DIM" = "$CURRENT_DIM" ]; then
+  sed -i "/inactive-dim = / s/"${DEFAULT_DIM}"/0/" ~/.config/picom/picom.conf
+else
+  sed -i "/inactive-dim = / s/0/"${DEFAULT_DIM}"/" ~/.config/picom/picom.conf
+fi

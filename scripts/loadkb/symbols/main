@@ -1,0 +1,55 @@
+// This keyboard layout only maps keys without changing modifiers
+// because xkb can't fire a key event upon release, leading to a bad
+// terminal experience when mapping caps to enter and arrows.
+// Caps Lock has been mapped to right alt with Interception Tools:
+// https://gitlab.com/interception/linux/tools
+// https://gitlab.com/interception/linux/plugins/dual-function-keys
+
+// TODO: Make caps lock act as a switcher for br, like ralt without dead keys.
+
+
+default alphanumeric_keys modifier_keys
+xkb_symbols "base" {
+    // typo includes lots of symbols for 
+    // 3rd and 4th layer
+    // include "typo"
+
+    // enable 3rd layer
+    include "level3(ralt_switch)"
+
+    // se(us) == us layout with åäö on layer 3 & 4
+    include "us"
+
+    // all includes prior to this line found in
+    // /usr/share/X11/xkb/symbols/
+
+    // below are custom symbols declared in here
+
+    include "main(custom)"
+};
+
+partial alphanumeric_keys modifier_keys
+xkb_symbols "custom" {
+  key <AC10> { [ colon, semicolon, ccedilla, Ccedilla ] }; // swaps colon and semicolon
+  key <AE11> { [ underscore, minus, NoSymbol, NoSymbol ] }; // swaps minus and underscore
+  key <AB10> { [ NoSymbol, NoSymbol, backslash, backslash ] };
+  key <AC11> { [ NoSymbol, NoSymbol, dead_tilde, dead_circumflex ] }; // "'"
+  key <AD11> { [ NoSymbol, NoSymbol, dead_acute, dead_grave ] }; // "["
+  key <AC02> { [ NoSymbol, NoSymbol, dollar, dollar ] }; // "s"
+  key <AD03> { [ NoSymbol, NoSymbol, egrave, Egrave ] }; // "e"
+  key <BKSL> { [ NoSymbol, NoSymbol, asterisk, asterisk ] }; // "\"
+  key <SPCE> { [ NoSymbol, NoSymbol, underscore, underscore ] }; // "space"
+  key <BKSP> { [ NoSymbol, NoSymbol, Delete, Delete ] }; // "backspace"
+};
+
+// agrave acircunflex aacute
+// egrave ecircunflex
+// igrave icircunflex
+// ograve ocircunflex
+// ugrave
+
+// barra n 2 c 5 f 8
+// interrogação n 6 c 4 f 3
+// dois pontos + ponto e virgula n 3 c 7 f 7
+// aspas simples + aspas duplas n 4 c 7 f 4
+

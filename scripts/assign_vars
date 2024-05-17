@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Save the input text in a variable
+input=$(cat)
+output=""
+
+# Set IFS to newline to split the input into lines
+IFS=$'\n'
+
+# Loop over the lines
+for line in $input
+do
+    # Ask the user for input
+    echo "Enter an answer for: $line"
+    read answer </dev/tty
+
+    # Print the line and the answer in the required format
+    output+="\"$line\":\"$answer\" "
+done
+
+echo $output
+

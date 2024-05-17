@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Read the text from stdin into a variable
+text=$(cat)
+
+# For each pair in the arguments
+for arg in "$@"
+do
+    # Split the pair into a variable and a value
+    IFS=':' read -r var value <<< "$arg"
+
+    # Escape any special characters in the variable and value
+    var=$(printf '%q' "$var")
+    value=$(printf '%q' "$value")
+
+    # Replace all instances of <% variable %> in the text with the value
+    text=$(perl -pe "s/<%\s*$var\s*%>/$value/g" <<< "$text")
+done
+
+# Print the processed text to stdout
+echo "$text"
+

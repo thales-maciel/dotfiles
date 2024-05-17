@@ -1,0 +1,4 @@
+#!/bin/bash
+
+perl -nle 'BEGIN{$/="";} while (/<%\s*(.*?)\s*%>/g) {$seen{$1}++ or print $1}' -
+

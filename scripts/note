@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# This script assumes that xargs, fd, fzf and bat are installed.
+
+NOTES_DIR="$HOME/notes";
+TEMPLATE_DIR="$HOME/notes/.templates";
+
+mkdir -p "$NOTES_DIR"
+mkdir -p "$TEMPLATE_DIR"
+
+cd "$NOTES_DIR"
+
+# Get file to edit
+file=$(fd . -tf -d2 -H | fzf \
+    --cycle \
+    --no-info \
+    --prompt="Edit or create a note > " \
+    --preview="bat {}" \
+    --preview-window=right:70%:wrap \
+    --print-query \
+    --bind='ctrl-space:replace-query' \
+    --bind='ctrl-j:replace-query' \
+    --bind='right:replace-query' \
+)
+
+IFS=$'\n' read -d '' -r -a output <<< "$file"
+query="${output[0]}"
+[[ -z "$query" ]] && exit 0
+selection="${output[1]}"
+
+if [ "$query" != "$selection" ]; then
+    query=$(echo "$query" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
+    [[ $query != *.md ]] && query="$query.md"
+    dir_path=$(dirname "$query")
+    mkdir -p "$dir_path"
+    touch "$query"
+fi
+
+$EDITOR '+normal GA' "$query"
+

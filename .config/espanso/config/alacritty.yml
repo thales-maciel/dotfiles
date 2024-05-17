@@ -1,0 +1,6 @@
+filter_class: Alacritty
+backend: Clipboard
+# paste_shortcut_event_delay: 50
+disable_x11_fast_inject: true
+# inject_delay: 15
+# key_delay: 10

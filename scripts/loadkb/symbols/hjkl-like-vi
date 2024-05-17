@@ -1,0 +1,32 @@
+hidden partial alphanumeric_keys
+xkb_symbols "hjkl-like-vi" {
+    // arrow keys (like vim)
+  key <AC06> {
+    actions = [ NoAction(), NoAction(), Redirect(key=<LEFT>,clearmods=AltGr), Redirect(key=<LEFT>,clearmods=AltGr) ] 
+  };
+  key <AC07> { 
+    actions = [ NoAction(), NoAction(), Redirect(key=<DOWN>,clearmods=AltGr), Redirect(key=<DOWN>,clearmods=AltGr) ] 
+  };
+  key <AC08> { 
+    actions = [ NoAction(), NoAction(), Redirect(key=<UP>,clearmods=AltGr), Redirect(key=<UP>,clearmods=AltGr) ] 
+  };
+  key <AC09> { 
+    actions = [ NoAction(), NoAction(), Redirect(key=<RGHT>,clearmods=AltGr), Redirect(key=<RGHT>,clearmods=AltGr) ] 
+  };
+
+  // row over HJKL
+  key <AD06> {
+    actions =   [ NoAction(), NoAction(), Redirect(key=<HOME>,clearmods=AltGr), Redirect(key=<HOME>,clearmods=AltGr) ] 
+  };
+  key <AD07> { 
+    actions =   [ NoAction(), NoAction(), Redirect(key=<PGDN>,clearmods=AltGr), Redirect(key=<PGDN>,clearmods=AltGr) ] 
+  };
+  key <AD08> { 
+    actions =   [ NoAction(), NoAction(), Redirect(key=<PGUP>,clearmods=AltGr), Redirect(key=<PGUP>,clearmods=AltGr) ] 
+  };
+  key <AD09> { 
+    actions =   [ NoAction(), NoAction(), Redirect(key=<END>,clearmods=AltGr), Redirect(key=<END>,clearmods=AltGr) ] 
+  };
+};
+
+// syntax:ssDslash

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+[ -z "$TMUX" ] && echo "Not in tmux" && exit 1
+
+tmpfile=$(mktemp /tmp/tmux-buffer-XXXXXX);
+
+tmux capture-pane -S -;
+tmux save-buffer $tmpfile;
+tmux send-keys "$EDITOR +\$ $tmpfile" C-m
+

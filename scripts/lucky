@@ -1,0 +1,8 @@
+#!/bin/bash
+
+num_args=$#
+
+rand_idx=$((RANDOM % num_args + 1))
+
+echo ${!rand_idx}
+

@@ -1,0 +1,16 @@
+gui:
+  sidePanelWidth: 0.3 # number from 0 to 1
+  expandFocusedSidePanel: true
+  showBottomLine: false
+  nerdFontsVersion: "3"
+  border: 'single'
+git:
+  paging:
+    externalDiffCommand: difft --color=always --display=inline
+customCommands:
+  - key: "C"
+    command: "git cz c"
+    description: "commit with commitizen"
+    context: "files"
+    loadingText: "opening commitizen commit tool"
+    subprocess: true

@@ -1,0 +1,7 @@
+matches:
+  - trigger: "..mod"
+    form: |
+      module [[moduleName]] where
+
+
+

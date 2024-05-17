@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+QUERY=$1
+output="$(fzf -q ${QUERY})"
+
+# echo $OUTPUT
+

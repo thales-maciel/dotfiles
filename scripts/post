@@ -1,0 +1,30 @@
+#!/bin/bash
+
+usage () {
+    echo "usage: post [title]"
+}
+
+# if no arguments are given, print usage and exit
+[[ -z "$*" ]] && usage && exit 1;
+
+title="$*"
+slug=$(echo "$title" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
+filename="${slug}.md"
+
+NOTES_DIR="$HOME/notes";
+TEMPLATE_DIR="$HOME/notes/.templates";
+
+mkdir -p "$NOTES_DIR"
+mkdir -p "$TEMPLATE_DIR"
+
+cd "$NOTES_DIR"
+
+# if filename already exists, warn and exit
+[[ -f "$filename" ]] && echo "WARNING: $filename already exists" && exit 1
+
+template_path="$TEMPLATE_DIR/post"
+template=$(cat "$template_path" | tpl "title:$title")
+
+echo "$template" >> "$filename" && $EDITOR -c "norm Go" "$filename"
+
+

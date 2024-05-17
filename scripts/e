@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# If no arguments are given, check permissions on CWD
+if [ -z "$1" ]; then
+    if [ -w "." ]; then
+        exec $EDITOR -w ~/.config/nvim/keys.log
+    else
+        exec sudoedit
+    fi
+    exit 0
+fi
+
+path="$1"
+shift  # Shift off the first argument (path) to access the rest
+
+# if path does not exists we try to create it
+if [ ! -e "$path" ]; then
+    parent_dir=$(dirname "$path")
+    mkdir -p "$parent_dir"
+    if [ $? -ne 0 ]; then
+        echo "Failed to create $parent_dir. Attempting with sudo"
+        if ! sudo -v; then
+            echo "Failed to obtain sudo permissions." && exit 1
+        fi
+        sudo mkdir -p "$parent_dir"
+        if [ $? -ne 0 ]; then
+            echo "Failed to create $parent_dir even with sudo." && exit 1
+        fi
+    fi
+    touch "$path"
+fi
+
+if [ -w "$path" ]; then
+    exec $EDITOR "$path" "$@" -w ~/.config/nvim/keys.log
+else
+    exec sudoedit "$path" "$@"
+fi
+
