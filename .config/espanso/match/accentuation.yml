@@ -4,6 +4,11 @@ matches:
     propagate_case: true
     word: true
 
+  - trigger: "s_erio"
+    replace: sério
+    propagate_case: true
+    word: true
+
   - trigger: "serio"
     replace: sério
     propagate_case: true

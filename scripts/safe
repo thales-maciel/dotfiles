@@ -1,0 +1,49 @@
+#!/bin/bash
+
+DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/thalesmaciel/safe"
+RECIPIENT="9DDD176E0FC16FCD0444344533112E6833C34679"
+
+mkdir -p "$DATA_DIR"
+
+print_help() {
+    echo "Usage: safe <get|g> <key> | <set|s> <key> <value> | help|-h|--help" >&2
+    echo "  get|g <key>         : Decrypts and provides the secret associated with the key" >&2
+    echo "  set|s <key> <value> : Decrypts the provided base64-encoded encrypted text." >&2
+    echo "  help|-h|--help      : Displays this help information." >&2
+}
+
+main() {
+    if [ "$#" -lt 2 ]; then
+        echo "Error: Not enough arguments." >&2
+        print_help
+        exit 1
+    fi
+
+    command="$1"
+    shift
+
+    case "$command" in
+        "get"|"g")
+            cat "$DATA_DIR/$1" | /usr/bin/gpg -d --quiet
+            ;;
+        "set"|"s")
+            if [ "$#" -lt 2 ]; then
+                echo "Error: Not enough arguments." >&2
+                print_help
+                exit 1
+            fi
+            echo "$2" | gpg -e -r "$RECIPIENT" --output "$DATA_DIR/$1"
+            # echo "$2" | gpg -e -r "$RECIPIENT" --output "$DATA_DIR/$key" --quiet
+            ;;
+        "help"|"-h"|"--help")
+            print_help
+            ;;
+        *)
+            echo "Error: Unknown command." >&2
+            print_help
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"

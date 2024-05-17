@@ -1,0 +1,80 @@
+matches:
+  - trigger: "..cpf"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "safe get cpf"
+          shell: "zsh"
+
+  - trigger: "..end"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "safe get end"
+          shell: "zsh"
+
+  - trigger: "..cep"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "safe get cep"
+          shell: "zsh"
+
+  - trigger: "..cel"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "safe get cel"
+          shell: "zsh"
+
+  - trigger: "..cnpj"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "safe get cnpj"
+          shell: "zsh"
+
+  - trigger: "..ub"
+    replace: "{{pw}}"
+    vars:
+      - name: pw
+        type: shell
+        params:
+          cmd: "safe get ub"
+          shell: "zsh"
+
+  - trigger: "..poa"
+    replace: porto alegre
+
+  - trigger: "..gorila"
+    replace: "https://www.youtube.com/watch?v=V_rWYRY-pOs"
+
+  - trigger: "..mail"
+    replace: "{{mail}}"
+    vars:
+    - name: form1
+      type: form
+      params:
+        layout: "Mail: [[addr]]"
+        fields:
+          addr:
+            type: list
+            values:
+              - gmail
+              - contact
+              - main
+    - name: mail
+      type: shell
+      params:
+        cmd: "safe get \"mail_$ESPANSO_FORM1_ADDR\""
+        shell: "zsh"
