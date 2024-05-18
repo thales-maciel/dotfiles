@@ -63,22 +63,18 @@ fi
 # Emacs mode
 bindkey -e
 
-# ZPLUG
-source_if_exists "~/.nix-profile/share/zplug/init.zsh" "zplug not found!"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "denysdovhan/spaceship-prompt"
-zplug "z-shell/F-Sy-H"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
+# Plugins
+source /usr/lib/spaceship-prompt/spaceship.zsh 2>/dev/null # some day I'll make my own prompt
 
-# zplug check returns true if all packages are installed
-# Therefore, when it returns false, run zplug install
-if ! zplug check; then
-    zplug install
-fi
+source "$HOME/.config/zsh/F-Sy-H/F-Sy-H.plugin.zsh"
+source "$HOME/.config/zsh/zsh-autosuggestions.zsh"
 
-# source plugins and add commands to the PATH
-zplug load
+source "$HOME/.config/zsh/zsh-history-substring-search.zsh"
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# zplug "zsh-users/zsh-completions"
+source "$HOME/.config/zsh/zsh-completions/zsh-completions.plugin.zsh"
 
 # Case-insensitive matching when tabbing
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
