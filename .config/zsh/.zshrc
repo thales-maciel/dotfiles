@@ -45,6 +45,7 @@ fi
 
 # History
 HISTFILE=$XDG_CACHE_HOME/zsh/history
+mkdir -p $(dirname "$HISTFILE")
 HISTSIZE=20000
 SAVEHIST=20000
 setopt INC_APPEND_HISTORY
@@ -61,7 +62,10 @@ if [[ -r ${ZDOTDIR:-~}/.aliases ]]; then
 fi
 
 # Emacs mode
-bindkey -e
+# bindkey -e
+
+# vi mode
+bindkey -v
 
 # Plugins
 source /usr/lib/spaceship-prompt/spaceship.zsh 2>/dev/null # some day I'll make my own prompt
@@ -114,7 +118,9 @@ export PATH="$PATH:/home/thales/bin"
 export PATH="/home/thales/.local/share/fnm:$PATH"
 eval "$(fnm env --use-on-cd)"
 
-export LOCALE_ARCHIVE="$(nix-env --installed --no-name --out-path --query glibc-locales)/lib/locale/locale-archive"
+if command -v nix-env > /dev/null 2>&1; then
+  export LOCALE_ARCHIVE="$(nix-env --installed --no-name --out-path --query glibc-locales)/lib/locale/locale-archive"
+fi
 
 # opam configuration
 [[ ! -r /home/thales/.opam/opam-init/init.zsh ]] || source /home/thales/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
