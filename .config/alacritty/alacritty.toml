@@ -39,27 +39,23 @@ TERM = "xterm-256color"
 [font]
 size = 10.0
 
+[font.normal]
+style = "Medium"
+
 [font.bold]
-family = "ComicCodeLigatures Nerd Font"
 style = "Bold"
 
+[font.italic]
+style = "Italic"
+
 [font.bold_italic]
-family = "ComicCodeLigatures Nerd Font"
 style = "Bold Italic"
+
+[font.offset]
+y = 4
 
 [font.glyph_offset]
 x = 0
-
-[font.italic]
-family = "ComicCodeLigatures Nerd Font"
-style = "Italic"
-
-[font.normal]
-family = "ComicCodeLigatures Nerd Font"
-style = "Medium"
-
-[font.offset]
-y = -1
 
 [[hints.enabled]]
 command = "browser-choice"
