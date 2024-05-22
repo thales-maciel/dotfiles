@@ -33,7 +33,6 @@ main() {
                 exit 1
             fi
             echo "$2" | gpg -e -r "$RECIPIENT" --output "$DATA_DIR/$1"
-            # echo "$2" | gpg -e -r "$RECIPIENT" --output "$DATA_DIR/$key" --quiet
             ;;
         "help"|"-h"|"--help")
             print_help
