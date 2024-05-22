@@ -1,0 +1,11 @@
+# Disables the screen saver
+xset s off
+
+# Disables power management signaling features
+xset -dpms
+
+# The `r` option controls the autorepeat
+# Passing `rate [delay [rate]]`:
+# - delay(ms): how much time is needed to trigger autorepeat when pressing a key
+# - rate(number): number of repeats per second when autorepeat is triggered
+xset r rate 210 35
