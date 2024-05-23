@@ -1,8 +1,15 @@
 return {
     'neovim/nvim-lspconfig',
     dependencies = {
+        'folke/neodev.nvim',
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
+        'WhoIsSethDaniel/mason-tool-installer',
+
+        -- schema information
+        'b0o/schemaStore.nvim',
+
+        -- cmp
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-path',
@@ -14,7 +21,6 @@ return {
     config = function ()
         -- #region cmp
         local cmp = require('cmp')
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         cmp.setup({
             snippet = {
@@ -51,120 +57,104 @@ return {
         -- #endregion cmp
 
         -- #region lsp
-        require('mason').setup()
-        require('mason-lspconfig').setup({
-            ensure_installed = {
-                'html',
-                'cssls',
-                'gopls',
-                'tsserver',
-                'lua_ls',
-                'rust_analyzer',
-                'templ',
-                'eslint'
+        local capabilities = nil
+        if pcall(require, "cmp_nvim_lsp") then
+            capabilities = require("cmp_nvim_lsp").default_capabilities()
+        end
+
+        local lspconfig = require "lspconfig"
+
+        local servers = {
+            bashls = true,
+            gopls = {
+                settings = {
+                    gopls = {
+                        hints = {
+                            assignVariableTypes = true,
+                            compositeLiteralFields = true,
+                            compositeLiteralTypes = true,
+                            constantValues = true,
+                            functionTypeParameters = true,
+                            parameterNames = true,
+                            rangeVariableTypes = true,
+                        },
+                    },
+                },
             },
-            handlers = {
-                function (server)
-                    require('lspconfig')[server].setup({
-                        capabilities = capabilities,
-                    })
-                end,
-                ["eslint"] = function ()
-                    local lspconfig = require('lspconfig')
-                    lspconfig["eslint"].setup({
-                        capabilities = capabilities,
-                        -- cmd = { "fnm" , "use", "21", "&&", "vscode-eslint-language-server", "--stdio"}
-                        -- settings = {
-                        --     eslint = {
-                        --         codeAction = {
-                        --             disableRuleComment = {
-                        --                 enable = true,
-                        --                 location = "separateLine"
-                        --             },
-                        --             showDocumentation = {
-                        --                 enable = true
-                        --             }
-                        --         },
-                        --         codeActionOnSave = {
-                        --             enable = false,
-                        --             mode = "all"
-                        --         },
-                        --         experimental = {
-                        --             useFlatConfig = false
-                        --         },
-                        --         format = true,
-                        --         nodePath = "",
-                        --         onIgnoredFiles = "off",
-                        --         problems = {
-                        --             shortenToSingleLine = false
-                        --         },
-                        --         quiet = false,
-                        --         rulesCustomizations = {},
-                        --         run = "onType",
-                        --         useESLintClass = false,
-                        --         validate = "on",
-                        --         workingDirectory = {
-                        --             mode = "location"
-                        --         }
-                        --     }
-                        -- }
-                    })
-                end,
-                ["rust_analyzer"] = function ()
-                    local lspconfig = require('lspconfig')
-                    lspconfig["rust_analyzer"].setup({
-                        capabilities = capabilities,
-                        settings = {
-                            ["rust_analyzer"] = {}
-                        }
-                    })
-                end,
-                ["gopls"] = function ()
-                    local lspconfig = require('lspconfig')
-                    lspconfig.gopls.setup({
-                        capabilities = capabilities,
-                        settings = {
-                            gopls = {
-                                usePlaceholders = true,
-                                analyses = {
-                                    unusedparams = true,
-                                    unusedresult = true,
-                                    unusedwrite = true,
-                                },
-                            }
-                        }
-                    })
-                end,
-                ["lua_ls"] = function ()
-                    local lspconfig = require('lspconfig')
-                    lspconfig.lua_ls.setup({
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = {'vim'},
-                                },
-                                workspace = {
-                                    checkThirdParty = "Disable",
-                                    library = {
-                                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                                        [vim.fn.stdpath("config")] = true,
-                                    }
-                                },
-                                hint = {
-                                    enable = true,
-                                    arrayIndex = "Disable",
-                                    await = true,
-                                    paramName = "All",
-                                    paramType = true,
-                                    semicolon = "All",
-                                    setType = false,
-                                }
-                            }
-                        }
-                    })
-                end
-            }
+            lua_ls = true,
+            rust_analyzer = true,
+            html = true,
+            cssls = true,
+            tsserver = true,
+            svelte = true,
+            templ = true,
+            jsonls = {
+                settings = {
+                    json = {
+                        schemas = require("schemastore").json.schemas(),
+                        validate = { enable = true },
+                    },
+                },
+            },
+            yamlls = {
+                settings = {
+                    yaml = {
+                        schemaStore = {
+                            enable = false,
+                            url = "",
+                        },
+                        schemas = require("schemastore").yaml.schemas(),
+                    },
+                },
+            },
+        }
+
+        local servers_to_install = vim.tbl_keys(servers)
+
+        local ensure_installed = {
+            "html",
+            "cssls",
+            "gopls",
+            "tsserver",
+            "lua_ls",
+            "rust_analyzer",
+            "templ",
+            "delve",
+        }
+
+        require("mason").setup()
+        vim.list_extend(ensure_installed, servers_to_install)
+        require("mason-tool-installer").setup { ensure_installed = ensure_installed }
+
+        for name, config in pairs(servers) do
+            if config == true then config = {} end
+            config = vim.tbl_deep_extend("force", {}, { capabilities = capabilities }, config)
+            lspconfig[name].setup(config)
+        end
+
+        vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function (_)
+                local opts = { buffer = 0 }
+
+                vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+
+                vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+                vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                vim.keymap.set("n", "<leader>lf", vim.diagnostic.open_float, opts)
+                vim.keymap.set("n", "<leader>lj", vim.diagnostic.goto_next, opts)
+                vim.keymap.set("n", "<leader>lk", vim.diagnostic.goto_prev, opts)
+                vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts)
+                vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
+                vim.keymap.set("v", "<leader>lf", vim.diagnostic.open_float, opts)
+                vim.keymap.set("v", "<leader>lj", vim.diagnostic.goto_next, opts)
+                vim.keymap.set("v", "<leader>lk", vim.diagnostic.goto_prev, opts)
+                vim.keymap.set("v", "<leader>la", vim.lsp.buf.code_action, opts)
+                vim.keymap.set("v", "<leader>lr", vim.lsp.buf.rename, opts)
+                vim.keymap.set("n", "<leader>li", function()
+                    vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
+                end, opts)
+            end
         })
         -- #endregion lsp
 
@@ -208,10 +198,10 @@ return {
         --#region Magic
         --#region GO
 
-        vim.keymap.set("n", "<leader>mi", require('go.iferr').run)
-        vim.keymap.set("n", "<leader>mfo", require('go.reftool').fillstruct)
-        vim.keymap.set("n", "<leader>mfs", require('go.reftool').fillswitch)
-
+        -- vim.keymap.set("n", "<leader>mi", require('go.iferr').run)
+        -- vim.keymap.set("n", "<leader>mfo", require('go.reftool').fillstruct)
+        -- vim.keymap.set("n", "<leader>mfs", require('go.reftool').fillswitch)
+        --
         --#endregion
         --#endregion
 
