@@ -61,10 +61,15 @@ alias j='just'
 alias gs='git status -sb'
 alias gp='git push'
 alias gpn="git push --no-verify"
+alias gpnf="git push --no-verify --force-with-lease"
 alias gca='git commit -a'
 alias gundo='git reset HEAD^'
 alias ga='git add'
 alias wt='git worktree'
+
+function ignore() {
+    echo "$1" >> .gitignore
+}
 
 # Docker
 alias dps="docker ps"

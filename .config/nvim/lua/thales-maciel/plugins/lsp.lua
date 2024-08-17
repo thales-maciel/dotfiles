@@ -85,7 +85,13 @@ return {
             rust_analyzer = true,
             html = true,
             cssls = true,
-            tsserver = true,
+            tsserver = {
+                settings = {
+                    implicitProjectConfiguration = {
+                        checkJs = true
+                    },
+                }
+            },
             svelte = true,
             templ = true,
             jsonls = {
@@ -107,6 +113,8 @@ return {
                     },
                 },
             },
+            -- pylyzer = true,
+            basedpyright = true,
         }
 
         local servers_to_install = vim.tbl_keys(servers)
@@ -132,6 +140,8 @@ return {
             lspconfig[name].setup(config)
         end
 
+        local td = require("thales-maciel.diagnostics")
+
         vim.api.nvim_create_autocmd("LspAttach", {
             callback = function (_)
                 local opts = { buffer = 0 }
@@ -141,11 +151,13 @@ return {
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+
                 vim.keymap.set("n", "<leader>lf", vim.diagnostic.open_float, opts)
                 vim.keymap.set("n", "<leader>lj", vim.diagnostic.goto_next, opts)
                 vim.keymap.set("n", "<leader>lk", vim.diagnostic.goto_prev, opts)
                 vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
+                vim.keymap.set("n", "<leader>lv", td.select_level, opts)
                 vim.keymap.set("v", "<leader>lf", vim.diagnostic.open_float, opts)
                 vim.keymap.set("v", "<leader>lj", vim.diagnostic.goto_next, opts)
                 vim.keymap.set("v", "<leader>lk", vim.diagnostic.goto_prev, opts)

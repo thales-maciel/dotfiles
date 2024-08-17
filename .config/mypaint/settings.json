@@ -62,54 +62,24 @@
         }
       ],
       "w": 23,
-      "h": 1290
+      "h": 359
     },
     "right_sidebar": {
       "groups": [
-        {
-          "tools": [
-            [
-              "MyPaintModeOptionsTool"
-            ]
-          ],
-          "active_page": 0,
-          "w": 320,
-          "h": 436
-        },
-        {
-          "tools": [
-            [
-              "MyPaintHistoryPanel"
-            ]
-          ],
-          "active_page": 0,
-          "w": 320,
-          "h": 176
-        },
-        {
-          "tools": [
-            [
-              "MyPaintLayersTool"
-            ]
-          ],
-          "active_page": 0,
-          "w": 320,
-          "h": 412
-        },
         {
           "tools": [],
           "active_page": -1
         }
       ],
       "w": 320,
-      "h": 1290
+      "h": 725
     },
     "floating": [],
     "position": {
-      "x": 973,
-      "y": 607,
-      "w": 1585,
-      "h": 1393
+      "x": 1280,
+      "y": 603,
+      "w": 1278,
+      "h": 828
     },
     "autohide": true,
     "fullscreen": false,
@@ -152,7 +122,7 @@
       "scroll": "zoom"
     }
   },
-  "colors.current": "#00ffff",
+  "colors.current": "#ffffff",
   "colors.palette": {
     "name": "MyPaint Default",
     "columns": 7,
@@ -472,11 +442,11 @@
   "ui.file_compat_warning_mild": true,
   "ui.file_compat_warning_severe": true,
   "colors.history": [
-    "#0000ff",
-    "#ffffff",
     "#ffff00",
+    "#141414",
+    "#00ffff",
     "#ff00ff",
-    "#00ffff"
+    "#ffffff"
   ],
   "brush_chooser.default.window_size": [
     256,

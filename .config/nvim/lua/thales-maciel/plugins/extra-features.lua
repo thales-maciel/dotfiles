@@ -85,9 +85,8 @@ return {
             local function keymaps() builtin.keymaps(themes.get_dropdown()) end
             local function buffers() builtin.buffers(themes.get_dropdown()) end
 
-            vim.keymap.set('n', '<leader>f', find_files, {})
-            vim.keymap.set('n', '<leader>sf', git_files, {})
-            vim.keymap.set('n', '<leader>sg', git_files, {})
+            vim.keymap.set('n', '<leader>f', git_files, {})
+            vim.keymap.set('n', '<leader>F', find_files, {})
             vim.keymap.set('n', '<leader>sr', recent_files, {})
             vim.keymap.set('n', '<leader>st', live_grep, {})
             vim.keymap.set('n', '<leader>sw', grep_string, {})

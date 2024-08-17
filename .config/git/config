@@ -7,6 +7,7 @@
 [user]
 	name = Thales Maciel
 	email = thales@thalesmaciel.com
+	signingkey = 33112E6833C34679
 [includeIf "gitdir:~/projects/bode/"]
 	path = ~/projects/bode/.gitconfig
 [includeIf "gitdir:~/projects/ubots/"]
@@ -59,3 +60,5 @@
 [rebase]
 	autostack = true
 	autostash = true
+[commit]
+	gpgsign = true
