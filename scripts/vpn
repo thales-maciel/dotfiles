@@ -18,7 +18,7 @@ down() {
 up() {
     down
     # set vivaldi as default browser
-    # xdg-mime default vivaldi-stable.desktop x-scheme-handler/https x-scheme-handler/http
+    xdg-mime default vivaldi-stable.desktop x-scheme-handler/https x-scheme-handler/http
     # connect to vpn
     openvpn3 session-start -c ~/projects/ubots/vpn-ashburn.ovpn
     # set firefox as default browser
