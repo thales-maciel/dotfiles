@@ -61,25 +61,35 @@
           "active_page": -1
         }
       ],
-      "w": 23,
-      "h": 359
+      "w": 237,
+      "h": 1295
     },
     "right_sidebar": {
       "groups": [
+        {
+          "tools": [
+            [
+              "MyPaintPaletteTool"
+            ]
+          ],
+          "active_page": 0,
+          "w": 237,
+          "h": 237
+        },
         {
           "tools": [],
           "active_page": -1
         }
       ],
-      "w": 320,
-      "h": 725
+      "w": 237,
+      "h": 1295
     },
     "floating": [],
     "position": {
       "x": 1280,
-      "y": 603,
+      "y": 602,
       "w": 1278,
-      "h": 828
+      "h": 1398
     },
     "autohide": true,
     "fullscreen": false,
@@ -124,316 +134,64 @@
   },
   "colors.current": "#ffffff",
   "colors.palette": {
-    "name": "MyPaint Default",
+    "name": "Gruvbox",
     "columns": 7,
     "entries": [
       [
-        "#000000",
-        "Black"
+        "#cc241d",
+        "red"
       ],
       [
-        "#262626",
-        "Gray 15"
+        "#98971a",
+        "green"
       ],
       [
-        "#4d4d4d",
-        "Grey 30"
+        "#d79921",
+        "yellow"
       ],
       [
-        "#808080",
-        "Grey 50"
+        "#458588",
+        "blue"
       ],
       [
-        "#ababab",
-        "Grey 67"
+        "#b16286",
+        "purple"
       ],
       [
-        "#d9d9d9",
-        "Grey 85"
+        "#689d6a",
+        "aqua"
       ],
       [
-        "#ffffff",
-        "White"
+        "#a89984",
+        "gray"
       ],
       [
-        "#800000",
-        "Maroon"
+        "#fb4934",
+        "Lred"
       ],
       [
-        "#d10000",
-        "English-red"
+        "#b8bb26",
+        "Lgreen"
       ],
       [
-        "#ff3622",
-        "Tomato"
+        "#fabd2f",
+        "Lyellow"
       ],
       [
-        "#fc3c03",
-        "Orange-red"
+        "#83a598",
+        "Lblue"
       ],
       [
-        "#ff8c69",
-        "Salmon"
+        "#d3869b",
+        "Lpurple"
       ],
       [
-        "#fce820",
-        "Cadium-yellow"
+        "#8ec07c",
+        "Laqua"
       ],
       [
-        "#f3fd25",
-        "Lemon yellow"
-      ],
-      [
-        "#790523",
-        "Dark crimson"
-      ],
-      [
-        "#a9203e",
-        "Deep carmine"
-      ],
-      [
-        "#ff8c00",
-        "Orange"
-      ],
-      [
-        "#ffa812",
-        "Dark tangerine"
-      ],
-      [
-        "#d99058",
-        "Persian orange"
-      ],
-      [
-        "#c2b280",
-        "Sand"
-      ],
-      [
-        "#ffe5b4",
-        "Peach"
-      ],
-      [
-        "#64362e",
-        "Bole"
-      ],
-      [
-        "#6c2934",
-        "Dark cordovan"
-      ],
-      [
-        "#a3412c",
-        "Chestnut"
-      ],
-      [
-        "#e48864",
-        "Dark salmon"
-      ],
-      [
-        "#ffc38f",
-        "Apricot"
-      ],
-      [
-        "#ffdbbc",
-        "Unbleached silk"
-      ],
-      [
-        "#f2e3c6",
-        "Straw"
-      ],
-      [
-        "#35130d",
-        "Bistre"
-      ],
-      [
-        "#542a0e",
-        "Dark chocolate"
-      ],
-      [
-        "#66332b",
-        "Burnt sienna"
-      ],
-      [
-        "#b84200",
-        "Sienna"
-      ],
-      [
-        "#d8990c",
-        "Yellow ochre"
-      ],
-      [
-        "#d2b48c",
-        "Tan"
-      ],
-      [
-        "#e8cc90",
-        "Dark wheat"
-      ],
-      [
-        "#003153",
-        "Prussian blue"
-      ],
-      [
-        "#304577",
-        "Dark grey blue"
-      ],
-      [
-        "#0047ab",
-        "Cobalt blue"
-      ],
-      [
-        "#1f75fe",
-        "Blue"
-      ],
-      [
-        "#78b4ff",
-        "Bright french blue"
-      ],
-      [
-        "#abc8ff",
-        "Bright steel blue"
-      ],
-      [
-        "#d0e7ff",
-        "Ice blue"
-      ],
-      [
-        "#1e333a",
-        "Medium jungle green"
-      ],
-      [
-        "#2f4f4f",
-        "Dark slate grey"
-      ],
-      [
-        "#4a685d",
-        "Dark grullo green"
-      ],
-      [
-        "#008080",
-        "Teal"
-      ],
-      [
-        "#43aab0",
-        "Turquoise"
-      ],
-      [
-        "#6daec7",
-        "Cerulean frost"
-      ],
-      [
-        "#add9ba",
-        "Tiffany green"
-      ],
-      [
-        "#16221d",
-        "Gray-asparagus"
-      ],
-      [
-        "#24302d",
-        "Medium dark teal"
-      ],
-      [
-        "#4a685d",
-        "Xanadu"
-      ],
-      [
-        "#77c679",
-        "Mint"
-      ],
-      [
-        "#afcdb6",
-        "Timberwolf"
-      ],
-      [
-        "#b9f5f6",
-        "Celeste"
-      ],
-      [
-        "#c1ffea",
-        "Aquamarine"
-      ],
-      [
-        "#1d3423",
-        "Cal Poly Pomona"
-      ],
-      [
-        "#014421",
-        "Forest green"
-      ],
-      [
-        "#2a8000",
-        "Napier green"
-      ],
-      [
-        "#808000",
-        "Olive"
-      ],
-      [
-        "#419c69",
-        "Sea green"
-      ],
-      [
-        "#bdf61d",
-        "Green-yellow"
-      ],
-      [
-        "#e7f486",
-        "Bright chartreuse"
-      ],
-      [
-        "#8a1789",
-        "Purple"
-      ],
-      [
-        "#4e278a",
-        "Violet"
-      ],
-      [
-        "#c14b6e",
-        "Dark thulian pink"
-      ],
-      [
-        "#de3163",
-        "Cerise"
-      ],
-      [
-        "#ff1493",
-        "Deep pink"
-      ],
-      [
-        "#ff66cc",
-        "Rose pink"
-      ],
-      [
-        "#ffcbdb",
-        "Pink"
-      ],
-      [
-        "#ffffff",
-        "White"
-      ],
-      [
-        "#e51101",
-        "RGB Red"
-      ],
-      [
-        "#00ff00",
-        "RGB Green"
-      ],
-      [
-        "#0000ff",
-        "RGB Blue"
-      ],
-      [
-        "#00ffff",
-        "CMYK Cyan"
-      ],
-      [
-        "#ff00ff",
-        "CMYK Magenta"
-      ],
-      [
-        "#ffff00",
-        "CMYK Yellow"
+        "#ebdbb2",
+        "fg"
       ]
     ]
   },
@@ -442,10 +200,10 @@
   "ui.file_compat_warning_mild": true,
   "ui.file_compat_warning_severe": true,
   "colors.history": [
-    "#ffff00",
-    "#141414",
-    "#00ffff",
     "#ff00ff",
+    "#cc231d",
+    "#fb4834",
+    "#ebdbb2",
     "#ffffff"
   ],
   "brush_chooser.default.window_size": [
@@ -455,12 +213,11 @@
   "brush_chooser.default.selected_group": "Classic",
   "color_chooser.default.window_size": [
     282,
-    320
+    322
   ],
-  "color_chooser.default.selected_adjuster": "RingsColorChangerTool",
+  "color_chooser.default.selected_adjuster": "HCYWheelTool",
   "command.max_undo_stack_size": 40,
   "scratchpad.last_opened": "/home/thales/.local/share/mypaint/scratchpads/autosave.ora",
   "cursor.freehand.style": "thin",
-  "autorecovery.check_at_startup": false,
-  "devbrush.last_used": "Wacom Intuos S Pen stylus"
+  "autorecovery.check_at_startup": false
 }
