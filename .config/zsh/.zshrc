@@ -65,8 +65,62 @@ source_if_exists ${ZDOTDIR:-~}/.aliases
 # vi mode
 bindkey -v
 
-# Plugins
-source /usr/lib/spaceship-prompt/spaceship.zsh 2>/dev/null # some day I'll make my own prompt
+# Prompt
+setopt prompt_subst
+autoload -U colors && colors
+
+# Load vcs_info
+autoload -Uz vcs_info
+precmd() {
+  vcs_info 
+
+  # Default branch color (magenta)
+  local branch_color='%F{white}'
+
+  # Check for unpulled changes
+  local unpulled_count=$(git rev-list --count HEAD..@{upstream} 2>/dev/null)
+  
+  # Check for unpushed changes
+  local unpushed_count=$(git rev-list --count @{upstream}..HEAD 2>/dev/null)
+
+  # Determine branch color based on unpulled/unpushed changes
+  if [[ -n $unpulled_count && $unpulled_count -gt 0 ]]; then
+    branch_color='%F{red}'
+  elif [[ -n $unpushed_count && $unpushed_count -gt 0 ]]; then
+    branch_color='%F{yellow}'
+  fi
+
+  # Check if working dir is dirty
+  local git_dirty=''
+  if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
+    git_dirty='*'
+  fi
+
+  # Set vcs_info_msg_0_ with the colored branch name and indicators
+  vcs_info_msg_0_="${branch_color}${vcs_info_msg_0_}${git_dirty}%f"
+
+  # Add markers for unpulled/unpushed changes
+  if [[ -n $unpulled_count && $unpulled_count -gt 0 ]]; then
+    vcs_info_msg_0_+="%F{red}↓$unpulled_count%f"
+  fi
+
+  if [[ -n $unpushed_count && $unpushed_count -gt 0 ]]; then
+    vcs_info_msg_0_+="%F{yellow}↑$unpushed_count%f"
+  fi
+}
+
+# Configure vcs_info with zstyle
+zstyle ':vcs_info:git:*' enable git
+zstyle ':vcs_info:git*' formats '%b'
+zstyle ':vcs_info:*' actionformats '%F{yellow}(%b|%a)%f'
+
+PROMPT='%B%F{cyan}%1~%f%b ${vcs_info_msg_0_}
+%B%(?.%F{green}λ%f%b.%F{red}λ%f%b) '
+
+
+
+
+
 
 source_if_exists /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source_if_exists /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
